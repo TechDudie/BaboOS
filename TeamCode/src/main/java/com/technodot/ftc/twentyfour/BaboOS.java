@@ -49,8 +49,6 @@ public class BaboOS extends LinearOpMode {
 
         // enter main loop
         while (opModeIsActive()) {
-            // execute stuff here
-
             // read gamepad input and set initial motor power
             // TODO: add configurable controls with gamepad switching
             float accel = gamepad1.left_stick_y;
@@ -144,6 +142,10 @@ public class BaboOS extends LinearOpMode {
                     slideTimer = 0;
                 }
             }
+
+            // i don't trust myself
+            telemetry.addData("slideTimer", slideTimer);
+            telemetry.addData("slideTime", slideTime);
 
             // update telemetry
             telemetry.addData("Status", "Running");
