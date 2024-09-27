@@ -106,7 +106,7 @@ public class BaboOS extends LinearOpMode {
                         slideStatus = 1;
                     }
                 } else { // slide is moving
-                    if (currentTime >= slideTimer + slideTime + slideConstant) { // slide can't move
+                    if (currentTime >= slideTimer - slideTime + slideConstant) { // slide can't move
                         slideMain.setPower(0.0);
                         slideTime += currentTime - slideTimer;
                         slideStatus = 0;
@@ -123,7 +123,7 @@ public class BaboOS extends LinearOpMode {
                         slideStatus = -1;
                     }
                 } else { // slide is moving
-                    if (currentTime >= slideTimer + slideTime + slideConstant) { // slide can't move
+                    if (currentTime >= slideTimer + slideTime) { // slide can't move
                         slideMain.setPower(0.0);
                         slideTime -= currentTime - slideTimer;
                         slideStatus = 0;
