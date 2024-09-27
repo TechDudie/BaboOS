@@ -56,8 +56,10 @@ public class BaboOS extends LinearOpMode {
             float directionY = gamepad1.right_stick_y;
             boolean clawPressed = gamepad1.a;
             boolean buttonB = gamepad1.b;
-            boolean slideExtendPressed = gamepad1.x;
-            boolean slideRetractPressed = gamepad1.y;
+            boolean slideExtendPressed = gamepad1.right_bumper;
+            boolean slideRetractPressed = gamepad1.left_bumper;
+            // boolean slideExtendPressed = gamepad1.x;
+            // boolean slideRetractPressed = gamepad1.y;
 
             telemetry.addData("left_stick_y", "%.4f accel", accel);
             telemetry.addData("right_stick_x", "%.4f directionX", directionX);
@@ -67,7 +69,7 @@ public class BaboOS extends LinearOpMode {
             float powerRight = accel;
 
             // calculate turning power
-            if (directionX != 0) {
+            if (directionY != 0) {
                 // calculate heading as a value between 1 and -1
                 float heading = (float) (Math.atan(directionX / directionY) * headingConstant);
                 if (directionX < 0) {
@@ -78,8 +80,8 @@ public class BaboOS extends LinearOpMode {
             }
 
             // set motor power
-            driveLeft.setPower(powerLeft);
-            driveRight.setPower(powerRight);
+            driveLeft.setPower((double) powerLeft);
+            driveRight.setPower((double) powerRight);
 
             // open or close claw
             if (clawPressed) {
