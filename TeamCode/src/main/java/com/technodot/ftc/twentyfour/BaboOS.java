@@ -15,8 +15,9 @@ public class BaboOS extends LinearOpMode {
 
     // variables
     private boolean clawOpen = false;
-    private boolean slideStatus = false;
-    private long slideTime = -1;
+    private int slideStatus = 0;
+    private long slideTime = 0;
+    private long slideTimer = -1;
 
     // constants
     public static final float headingConstant = 0.636619772386F;
@@ -56,9 +57,9 @@ public class BaboOS extends LinearOpMode {
             float directionX = gamepad1.right_stick_x;
             float directionY = gamepad1.right_stick_y;
             boolean clawPressed = gamepad1.a;
-            boolean slidePressed = gamepad1.b;
-            boolean buttonX = gamepad1.x;
-            boolean buttonY = gamepad1.y;
+            boolean buttonB = gamepad1.b;
+            boolean slideExtendPressed = gamepad1.x;
+            boolean slideRetractPressed = gamepad1.y;
 
             telemetry.addData("left_stick_y", "%.4f accel", accel);
             telemetry.addData("right_stick_x", "%.4f directionX", directionX);
@@ -93,19 +94,52 @@ public class BaboOS extends LinearOpMode {
             }
 
             // extend or retract slide
-            // TODO: add option to interrupt slide and reverse direction
-            if (slidePressed) {
-                if (slideTime == -1) {
-                    slideTime = System.currentTimeMillis();
-                    slideStatus = !slideStatus;
+
+            // ok this code is messed up as hell so more comments here
+            long currentTime = System.currentTimeMillis(); // get current time
+
+            if (slideExtendPressed) { // extend slide button pressed
+                if (slideStatus == 0) { // slide not moving
+                    if (slideTime >= slideConstant) { // slide can move
+                        slideMain.setPower(-1.0);
+                        slideTimer = currentTime;
+                        slideStatus = 1;
+                    }
+                } else { // slide is moving
+                    if (currentTime >= slideTimer + slideTime + slideConstant) { // slide can't move
+                        slideMain.setPower(0.0);
+                        slideStatus = 0;
+                        slideTimer = 0;
+                    } else if (slideStatus != 0) { // slide is moving
+                        slideMain.setPower(-1.0);
+                    }
                 }
-            }
-            if (slideTime != -1) {
-                if (System.currentTimeMillis() >= slideTime + slideConstant) {
-                    slideMain.setPower(0);
-                    slideTime = -1;
-                } else {
-                    slideMain.setPower(slideStatus ? -1.0 : 1.0);
+            } else if (slideRetractPressed) { // retract slide button pressed
+                if (slideStatus == 0) { // slide not moving
+                    if (slideTime >= slideConstant) { // slide can move
+                        slideMain.setPower(1.0);
+                        slideTimer = currentTime;
+                        slideStatus = -1;
+                    }
+                } else { // slide is moving
+                    if (currentTime >= slideTimer + slideTime + slideConstant) { // slide can't move
+                        slideMain.setPower(0.0);
+                        slideStatus = 0;
+                        slideTimer = 0;
+                    } else if (slideStatus != 0) { // slide is moving
+                        slideMain.setPower(1.0);
+                    }
+                }
+            } else { // neither buttons pressed
+                slideMain.setPower(0.0);
+                if (slideStatus == 1) {
+                    slideTime += currentTime - slideTimer;
+                    slideStatus = 0;
+                    slideTimer = 0;
+                } else if (slideStatus == -1) {
+                    slideTime -= currentTime - slideTimer;
+                    slideStatus = 0;
+                    slideTimer = 0;
                 }
             }
 

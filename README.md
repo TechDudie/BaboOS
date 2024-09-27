@@ -11,12 +11,14 @@ i hope i didn't mess up renaming the package name because lets be honest, the ol
 
 ### People
 
-- @technodot the programmer
-- @silentrunner101 the designer/thinker
-- @safire1k the builder/thinker
-- @akwatson the builder/thinker
-- @somethin_999 the builder/thinker
-- @averyisbest65 the nusiance
+- **@technodot** the programmer
+- **@silentrunner101** the designer/thinker
+- **@safire1k** the builder/thinker
+- **@akwatson** the builder/thinker
+- **@somethin_999** the builder/thinker
+- **@averyisbest65** the nusiance
+- **max meirowski** also a nuisance
+- **gavin** does not have discord :(
 
 (please, have mercy)<br>
 (i missed like the first week of robotics so I have no clue how to build crap)
