@@ -2,7 +2,6 @@ package com.technodot.ftc.twentyfour;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -23,7 +22,7 @@ public class ArriTag extends LinearOpMode {
         cameraFront = hardwareMap.get(WebcamName.class, "cameraFront");
         initAprilTag();
 
-        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
+        telemetry.addData("DS preview on/off", "3 dots,2 Camera Stream");
         telemetry.addData(">", "Touch START to start OpMode");
         telemetry.update();
 
