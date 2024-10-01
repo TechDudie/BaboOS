@@ -26,7 +26,7 @@ public class AkbarDrive {
     }
 
     public void updateDriveSpeed() {
-        BaboOS.driveLeft.setPower((double) powerLeft);
-        BaboOS.driveRight.setPower((double) powerRight);
+        MaxyMotor.driveLeft.setPower((double) powerLeft);
+        MaxyMotor.driveRight.setPower((double) powerRight);
     }
 }

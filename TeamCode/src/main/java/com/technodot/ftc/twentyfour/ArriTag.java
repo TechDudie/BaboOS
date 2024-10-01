@@ -11,7 +11,6 @@ import java.util.List;
 
 @TeleOp(name="ArriTag", group="TechnoCode")
 public class ArriTag extends LinearOpMode {
-    // AprilTag processor
     private AprilTagProcessor aprilTag;
     private VisionPortal visionPortal;
     private WebcamName cameraFront;
@@ -42,6 +41,7 @@ public class ArriTag extends LinearOpMode {
             telemetry.update();
 
             // process video stream at 30FPS
+            // TODO: factor in time taken and make process concurrent
             sleep(30);
         }
         visionPortal.close();

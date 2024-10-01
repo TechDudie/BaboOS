@@ -9,9 +9,9 @@ public class ChrisClaw {
     public void updateClawStatus(boolean clawPressed) {
         if (clawPressed) {
             if (clawOpen) {
-                BaboOS.clawMain.setPosition(0.0);
+                MaxyMotor.clawMain.setPosition(0.0);
             } else {
-                BaboOS.clawMain.setPosition(0.4);
+                MaxyMotor.clawMain.setPosition(0.4);
             }
             clawOpen = !clawOpen;
         }
@@ -24,39 +24,39 @@ public class ChrisClaw {
         if (slideExtendPressed) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
                 if (slideTime >= BaboOS.slideConstant) { // slide can move
-                    BaboOS.slideMain.setPower(-1.0);
+                    MaxyMotor.slideMain.setPower(-1.0);
                     slideTimer = currentTime;
                     slideStatus = 1;
                 }
             } else { // slide is moving
                 if (currentTime >= slideTimer - slideTime + BaboOS.slideConstant) { // slide can't move
-                    BaboOS.slideMain.setPower(0.0);
+                    MaxyMotor.slideMain.setPower(0.0);
                     slideTime = BaboOS.slideConstant;
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    BaboOS.slideMain.setPower(-1.0);
+                    MaxyMotor.slideMain.setPower(-1.0);
                 }
             }
         } else if (slideRetractPressed) { // retract slide button pressed
             if (slideStatus == 0) { // slide not moving
                 if (slideTime >= BaboOS.slideConstant) { // slide can move
-                    BaboOS.slideMain.setPower(1.0);
+                    MaxyMotor.slideMain.setPower(1.0);
                     slideTimer = currentTime;
                     slideStatus = -1;
                 }
             } else { // slide is moving
                 if (currentTime >= slideTimer + slideTime) { // slide can't move
-                    BaboOS.slideMain.setPower(0.0);
+                    MaxyMotor.slideMain.setPower(0.0);
                     slideTime = 0;
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    BaboOS.slideMain.setPower(1.0);
+                    MaxyMotor.slideMain.setPower(1.0);
                 }
             }
         } else { // neither buttons pressed
-            BaboOS.slideMain.setPower(0.0);
+            MaxyMotor.slideMain.setPower(0.0);
             if (slideStatus == 1) {
                 slideTime += currentTime - slideTimer;
                 slideStatus = 0;
