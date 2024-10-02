@@ -68,7 +68,7 @@ public class BaboOS extends LinearOpMode {
             telemetry.addData("right_stick_y", "%.4f directionY", directionY);
 
             float powerLeft = accel;
-            float powerRight = accel;
+            float powerRight = -accel;
 
             // calculate turning power
             if (directionX != 0) {
