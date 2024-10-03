@@ -138,6 +138,10 @@ public class BaboOS extends LinearOpMode {
             updateClaw(clawOpenPressed, clawClosePressed);
             updateSlide(slideExtendPressed, slideRetractPressed);
 
+            telemetry.addData("slideStatus", slideStatus);
+            telemetry.addData("slideTime", slideTime);
+            telemetry.addData("slideTimer", slideTimer);
+
             telemetry.addData("Status", "Running");
             telemetry.update();
         }
