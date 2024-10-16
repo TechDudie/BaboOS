@@ -28,37 +28,66 @@ public class BaboOS extends LinearOpMode {
         return Math.abs(variable - target) <= delta;
     }
 
+    /**
+     * Updates the drive motors with controller input
+     *
+     * @param accelX        left joystick X
+     * @param accelY        left joystick Y
+     * @param directionX    right joystick X
+     * @param directionY    right joystick Y
+     */
     private void updateDrive(float accelX, float accelY, float directionX, float directionY) {
         float powerLeft = -accelY;
-        float powerRight = accelY;
+        float powerRight = -accelY;
 
         if (directionX != 0) {
             float heading = (float) (Math.atan(directionX / directionY) * headingConstant);
+            if (directionX < 0) {
+                heading *= -1;
+            }
+            if (directionY < 0) {
+                heading += 2;
+            }
+            heading -= 1;
+            telemetry.addData("driveMultiplier", heading);
             if (directionX < 0) {
                 powerLeft *= -heading;
             } else if (directionX > 0) {
                 powerRight *= heading;
             }
-            if (directionY < 0) {
-                powerLeft *= -1;
-                powerRight *= -1;
-            }
         }
+
+        telemetry.addData("powerLeft", powerLeft);
+        telemetry.addData("powerRight", powerRight);
 
         driveLeft.setPower(powerLeft);
         driveRight.setPower(powerRight);
     }
 
+    /**
+     * Updates the claw servo with controller input
+     *
+     * @param clawOpenPressed   button A pressed
+     * @param clawClosePressed  button B pressed
+     */
     private void updateClaw(boolean clawOpenPressed, boolean clawClosePressed) {
         if (clawOpenPressed) {
-            clawMain.setPosition(0.0);
+            clawMain.setPosition(-1.0);
         } else if (clawClosePressed) {
-            clawMain.setPosition(0.4);
+            clawMain.setPosition(1.0);
         }
     }
 
+    /**
+     * Updates the slide motor with controller input
+     *
+     * @param slideExtendPressed    left bumper pressed
+     * @param slideRetractPressed   right bumper pressed
+     */
     private void updateSlide(boolean slideExtendPressed, boolean slideRetractPressed) {
         long currentTime = System.currentTimeMillis();
+
+        // TODO: bug in extend slide
 
         if (slideExtendPressed) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
@@ -108,6 +137,9 @@ public class BaboOS extends LinearOpMode {
         }
     }
 
+    /**
+     * TeleOp main loop
+     */
     @Override
     public void runOpMode() {
         // initialize
