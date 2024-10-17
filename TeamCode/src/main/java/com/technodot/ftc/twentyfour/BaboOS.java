@@ -38,7 +38,7 @@ public class BaboOS extends LinearOpMode {
      */
     private void updateDrive(float accelX, float accelY, float directionX, float directionY) {
         float powerLeft = -accelY;
-        float powerRight = -accelY;
+        float powerRight = accelY;
 
         if (directionX != 0) {
             float heading = (float) (Math.atan(directionX / directionY) * headingConstant);
@@ -51,14 +51,11 @@ public class BaboOS extends LinearOpMode {
             heading -= 1;
             telemetry.addData("driveMultiplier", heading);
             if (directionX < 0) {
-                powerLeft *= -heading;
+                powerRight *= -heading;
             } else if (directionX > 0) {
-                powerRight *= heading;
+                powerLeft *= heading;
             }
         }
-
-        telemetry.addData("powerLeft", powerLeft);
-        telemetry.addData("powerRight", powerRight);
 
         driveLeft.setPower(powerLeft);
         driveRight.setPower(powerRight);
@@ -153,6 +150,8 @@ public class BaboOS extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
+            telemetry.addData("Status", "Running");
+
             float accelX = gamepad1.left_stick_x;
             float accelY = gamepad1.left_stick_y;
             float directionX = gamepad1.right_stick_x;
@@ -174,7 +173,6 @@ public class BaboOS extends LinearOpMode {
             telemetry.addData("slideTime", slideTime);
             telemetry.addData("slideTimer", slideTimer);
 
-            telemetry.addData("Status", "Running");
             telemetry.update();
         }
     }
