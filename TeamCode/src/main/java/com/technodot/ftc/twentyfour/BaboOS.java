@@ -22,11 +22,6 @@ public class BaboOS extends LinearOpMode {
     public static final float headingConstant = 0.636619772386F;
     public static final int slideConstant = 2000;
     public static final float slideRetractMultiplier = 0.9F;
-    public static final float delta = 0.00001F;
-
-    private boolean isWithinDelta(double variable, double target) {
-        return Math.abs(variable - target) <= delta;
-    }
 
     /**
      * Updates the drive motors with controller input
@@ -49,7 +44,6 @@ public class BaboOS extends LinearOpMode {
                 heading += 2;
             }
             heading -= 1;
-            telemetry.addData("driveMultiplier", heading);
             if (directionX < 0) {
                 powerRight *= -heading;
             } else if (directionX > 0) {
@@ -84,7 +78,7 @@ public class BaboOS extends LinearOpMode {
     private void updateSlide(boolean slideExtendPressed, boolean slideRetractPressed) {
         long currentTime = System.currentTimeMillis();
 
-        // TODO: bug in extend slide
+        // TODO: buggy, period
 
         if (slideExtendPressed) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
@@ -135,23 +129,23 @@ public class BaboOS extends LinearOpMode {
     }
 
     /**
-     * TeleOp main loop
+     * TeleOp main code
      */
     @Override
     public void runOpMode() {
-        // initialize
+        // initialize devices
         driveLeft = hardwareMap.get(DcMotor.class, "driveLeft");
         driveRight = hardwareMap.get(DcMotor.class, "driveRight");
         slideMain = hardwareMap.get(DcMotor.class, "slideMain");
         clawMain = hardwareMap.get(Servo.class, "clawMain");
 
+        // initialize telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         waitForStart();
         while (opModeIsActive()) {
-            telemetry.addData("Status", "Running");
-
+            // read input
             float accelX = gamepad1.left_stick_x;
             float accelY = gamepad1.left_stick_y;
             float directionX = gamepad1.right_stick_x;
@@ -165,14 +159,16 @@ public class BaboOS extends LinearOpMode {
             boolean slideRetractedRecalibratePressed = gamepad1.dpad_left;
             boolean slideExtendedRecalibratePressed = gamepad1.dpad_right;
 
+            // update devices
             updateDrive(accelX, accelY, directionX, directionY);
             updateClaw(clawOpenPressed, clawClosePressed);
             updateSlide(slideExtendPressed, slideRetractPressed);
 
+            // update telemetry
+            telemetry.addData("Status", "Running");
             telemetry.addData("slideStatus", slideStatus);
             telemetry.addData("slideTime", slideTime);
             telemetry.addData("slideTimer", slideTimer);
-
             telemetry.update();
         }
     }
