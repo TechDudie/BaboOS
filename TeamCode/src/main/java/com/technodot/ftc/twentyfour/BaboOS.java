@@ -20,8 +20,6 @@ public class BaboOS extends LinearOpMode {
 
     // constants
     public static final float headingConstant = 0.636619772386F;
-    public static final int slideConstant = 2000;
-    public static final float slideRetractMultiplier = 0.9F;
 
     /**
      * Updates the drive motors with controller input
@@ -32,8 +30,8 @@ public class BaboOS extends LinearOpMode {
      * @param directionY    right joystick Y
      */
     private void updateDrive(float accelX, float accelY, float directionX, float directionY) {
-        float powerLeft = -accelY;
-        float powerRight = accelY;
+        float powerLeft = accelY * RobotConstants.driveLeftMultiplier;
+        float powerRight = accelY * RobotConstants.driveRightMultiplier;
 
         if (directionX != 0) {
             float heading = (float) (Math.atan(directionX / directionY) * headingConstant);
@@ -44,10 +42,18 @@ public class BaboOS extends LinearOpMode {
                 heading += 2;
             }
             heading -= 1;
-            if (directionX < 0) {
-                powerRight *= -heading;
-            } else if (directionX > 0) {
-                powerLeft *= heading;
+            if (RobotConstants.driveTurnDirection > 0) {
+                if (directionX < 0) {
+                    powerLeft *= -heading;
+                } else if (directionX > 0) {
+                    powerRight *= heading;
+                }
+            } else if (RobotConstants.driveTurnDirection < 0) {
+                if (directionX < 0) {
+                    powerRight *= -heading;
+                } else if (directionX > 0) {
+                    powerLeft *= heading;
+                }
             }
         }
 
@@ -63,9 +69,9 @@ public class BaboOS extends LinearOpMode {
      */
     private void updateClaw(boolean clawOpenPressed, boolean clawClosePressed) {
         if (clawOpenPressed) {
-            clawMain.setPosition(-1.0);
+            clawMain.setPosition(RobotConstants.clawOpenPosition);
         } else if (clawClosePressed) {
-            clawMain.setPosition(1.0);
+            clawMain.setPosition(RobotConstants.clawClosePosition);
         }
     }
 
@@ -82,25 +88,25 @@ public class BaboOS extends LinearOpMode {
 
         if (slideExtendPressed) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
-                if (slideTime <= slideConstant) { // slide can move
-                    slideMain.setPower(-1.0);
+                if (slideTime <= RobotConstants.slideConstant) { // slide can move
+                    slideMain.setPower(RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier);
                     slideTimer = currentTime;
                     slideStatus = 1;
                 }
             } else { // slide is moving
-                if (currentTime >= slideTimer - slideTime + slideConstant) { // slide can't move
+                if (currentTime >= slideTimer - slideTime + RobotConstants.slideConstant) { // slide can't move
                     slideMain.setPower(0.0);
-                    slideTime = slideConstant;
+                    slideTime = RobotConstants.slideConstant;
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    slideMain.setPower(-1.0);
+                    slideMain.setPower(RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier);
                 }
             }
         } else if (slideRetractPressed) { // retract slide button pressed
             if (slideStatus == 0) { // slide not moving
                 if (slideTime > 0) { // slide can move
-                    slideMain.setPower(1.0 * slideRetractMultiplier);
+                    slideMain.setPower(-1.0 * RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier * RobotConstants.slideRetractMultiplier);
                     slideTimer = currentTime;
                     slideStatus = -1;
                 }
@@ -111,7 +117,7 @@ public class BaboOS extends LinearOpMode {
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    slideMain.setPower(1.0 * slideRetractMultiplier);
+                    slideMain.setPower(-1.0 * RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier * RobotConstants.slideRetractMultiplier);
                 }
             }
         } else { // neither buttons pressed
