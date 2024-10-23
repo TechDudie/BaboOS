@@ -44,15 +44,15 @@ public class BaboOS extends LinearOpMode {
             heading -= 1;
             if (RobotConstants.driveTurnDirection > 0) {
                 if (directionX < 0) {
-                    powerLeft *= -heading;
-                } else if (directionX > 0) {
-                    powerRight *= heading;
-                }
-            } else if (RobotConstants.driveTurnDirection < 0) {
-                if (directionX < 0) {
                     powerRight *= -heading;
                 } else if (directionX > 0) {
                     powerLeft *= heading;
+                }
+            } else if (RobotConstants.driveTurnDirection < 0) {
+                if (directionX < 0) {
+                    powerLeft *= -heading;
+                } else if (directionX > 0) {
+                    powerRight *= heading;
                 }
             }
         }
@@ -88,7 +88,7 @@ public class BaboOS extends LinearOpMode {
 
         if (slideExtendPressed) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
-                if (slideTime <= RobotConstants.slideConstant) { // slide can move
+                if (slideTime < RobotConstants.slideConstant) { // slide can move
                     slideMain.setPower(RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier);
                     slideTimer = currentTime;
                     slideStatus = 1;
