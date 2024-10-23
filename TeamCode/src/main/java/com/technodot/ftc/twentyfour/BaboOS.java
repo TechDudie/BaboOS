@@ -18,6 +18,9 @@ public class BaboOS extends LinearOpMode {
     private long slideTime = 0;
     private long slideTimer = 0;
 
+    // AprilTag controller
+    AprilTag aprilTag = new AprilTag(hardwareMap, telemetry);
+
     // constants
     public static final float headingConstant = 0.636619772386F;
 
@@ -134,6 +137,14 @@ public class BaboOS extends LinearOpMode {
         }
     }
 
+    private void updateCamera(boolean cameraVisionPortalStartPressed, boolean cameraVisionPortalStopPressed) {
+        if (cameraVisionPortalStartPressed) {
+            aprilTag.setCameraStatus(true);
+        } else if (cameraVisionPortalStopPressed) {
+            aprilTag.setCameraStatus(false);
+        }
+    }
+
     /**
      * TeleOp main code
      */
@@ -145,7 +156,10 @@ public class BaboOS extends LinearOpMode {
         slideMain = hardwareMap.get(DcMotor.class, "slideMain");
         clawMain = hardwareMap.get(Servo.class, "clawMain");
 
-        // initialize telemetry
+        // initialize AprilTag
+        aprilTag.initAprilTag();
+
+        // finish initialization
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -160,22 +174,30 @@ public class BaboOS extends LinearOpMode {
             boolean clawClosePressed = gamepad1.b;
             boolean slideExtendPressed = gamepad1.left_bumper;
             boolean slideRetractPressed = gamepad1.right_bumper;
-            boolean slideExtendForcePressed = gamepad1.dpad_up;
-            boolean slideRetractForcePressed = gamepad1.dpad_down;
-            boolean slideRetractedRecalibratePressed = gamepad1.dpad_left;
-            boolean slideExtendedRecalibratePressed = gamepad1.dpad_right;
+            boolean slideRetractForcePressed = gamepad1.dpad_up;
+            boolean slideRetractedRecalibratePressed = gamepad1.dpad_down;
+            boolean cameraVisionPortalStartPressed = gamepad1.dpad_left;
+            boolean cameraVisionPortalStopPressed = gamepad1.dpad_right;
 
             // update devices
             updateDrive(accelX, accelY, directionX, directionY);
             updateClaw(clawOpenPressed, clawClosePressed);
             updateSlide(slideExtendPressed, slideRetractPressed);
+            updateCamera(cameraVisionPortalStartPressed, cameraVisionPortalStopPressed);
 
             // update telemetry
             telemetry.addData("Status", "Running");
             telemetry.addData("slideStatus", slideStatus);
             telemetry.addData("slideTime", slideTime);
             telemetry.addData("slideTimer", slideTimer);
+
+            aprilTag.detectAprilTag();
             telemetry.update();
         }
+
+        aprilTag.closeAprilTag();
+
+        telemetry.addData("Status", "Stopped");
+        telemetry.update();
     }
 }

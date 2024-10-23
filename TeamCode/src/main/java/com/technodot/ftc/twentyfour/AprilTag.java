@@ -1,7 +1,9 @@
 package com.technodot.ftc.twentyfour;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -9,41 +11,30 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
-public class AprilTag extends LinearOpMode {
+public class AprilTag {
+    private HardwareMap hardwareMap;
+    private Telemetry telemetry;
+
     private AprilTagProcessor aprilTag;
     private VisionPortal visionPortal;
     private WebcamName cameraFront;
 
-    @Override
-    public void runOpMode() {
+    AprilTag(HardwareMap map, Telemetry telem) {
+        super();
 
-        telemetry.addData("DS preview on/off", "3 dots,2 Camera Stream");
-        telemetry.addData(">", "Touch START to start OpMode");
-        telemetry.update();
-
-        // wait for start
-        waitForStart();
-
-        // enter main loop
-        while (opModeIsActive()) {
-            if (gamepad1.dpad_down) {
-                visionPortal.stopStreaming();
-            } else if (gamepad1.dpad_up) {
-                visionPortal.resumeStreaming();
-            }
-
-            // report and update telemetry
-            telemetryAprilTag();
-            telemetry.update();
-
-            // process video stream at 30FPS
-            // TODO: factor in time taken and make process concurrent
-            sleep(30);
-        }
-        visionPortal.close();
+        hardwareMap = map;
+        telemetry = telem;
     }
 
-    private void initAprilTag() {
+    public void setCameraStatus(Boolean active) {
+        if (!active) {
+            visionPortal.stopStreaming();
+        } else if (active) {
+            visionPortal.resumeStreaming();
+        }
+    }
+
+    public void initAprilTag() {
         // initialize AprilTag processor
         cameraFront = hardwareMap.get(WebcamName.class, "cameraFront");
         aprilTag = new AprilTagProcessor.Builder()
@@ -74,7 +65,7 @@ public class AprilTag extends LinearOpMode {
         visionPortal.setProcessorEnabled(aprilTag, true); // disable or re-enable the aprilTag processor
     }
 
-    private void telemetryAprilTag() {
+    public void detectAprilTag() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
 
@@ -92,5 +83,9 @@ public class AprilTag extends LinearOpMode {
         telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
         telemetry.addLine("RBE = Range, Bearing & Elevation");
+    }
+
+    public void closeAprilTag() {
+        visionPortal.close();
     }
 }
