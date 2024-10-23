@@ -14,19 +14,12 @@ import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class AprilTag {
-    private final HardwareMap hardwareMap;
-    private final Telemetry telemetry;
+    private HardwareMap hardwareMap;
+    private Telemetry telemetry;
 
     private AprilTagProcessor aprilTag;
     private VisionPortal visionPortal;
     private WebcamName cameraFront;
-
-    AprilTag(HardwareMap map, Telemetry telem) {
-        super();
-
-        hardwareMap = map;
-        telemetry = telem;
-    }
 
     public void setCameraStatus(Boolean active) {
         if (!active) {
@@ -36,7 +29,10 @@ public class AprilTag {
         }
     }
 
-    public void initAprilTag() {
+    public void initAprilTag(HardwareMap map, Telemetry telem) {
+        hardwareMap = map;
+        telemetry = telem;
+
         // initialize AprilTag processor
         cameraFront = hardwareMap.get(WebcamName.class, "cameraFront");
         aprilTag = new AprilTagProcessor.Builder()

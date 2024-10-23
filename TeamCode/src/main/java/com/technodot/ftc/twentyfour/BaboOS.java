@@ -19,7 +19,7 @@ public class BaboOS extends LinearOpMode {
     private long slideTimer = 0;
 
     // AprilTag controller
-    AprilTag aprilTag = new AprilTag(hardwareMap, telemetry);
+    AprilTag aprilTag = new AprilTag();
 
     // constants
     public static final float headingConstant = 0.636619772386F;
@@ -160,7 +160,7 @@ public class BaboOS extends LinearOpMode {
         clawMain = hardwareMap.get(Servo.class, "clawMain");
 
         // initialize AprilTag
-        aprilTag.initAprilTag();
+        aprilTag.initAprilTag(hardwareMap, telemetry);
 
         // finish initialization
         telemetry.addData("Status", "Initialized");
