@@ -32,6 +32,7 @@ public class BaboOS extends LinearOpMode {
      * @param directionX    right joystick X
      * @param directionY    right joystick Y
      */
+    @SuppressWarnings("UnusedParameters")
     private void updateDrive(float accelX, float accelY, float directionX, float directionY) {
         float powerLeft = accelY * RobotConstants.driveLeftMultiplier;
         float powerRight = accelY * RobotConstants.driveRightMultiplier;
@@ -84,6 +85,7 @@ public class BaboOS extends LinearOpMode {
      * @param slideExtendPressed    left bumper pressed
      * @param slideRetractPressed   right bumper pressed
      */
+    @SuppressWarnings("ConstantConditions")
     private void updateSlide(boolean slideExtendPressed, boolean slideRetractPressed) {
         long currentTime = System.currentTimeMillis();
 
@@ -148,6 +150,7 @@ public class BaboOS extends LinearOpMode {
     /**
      * TeleOp main code
      */
+    @SuppressWarnings("UnusedDeclaration")
     @Override
     public void runOpMode() {
         // initialize devices

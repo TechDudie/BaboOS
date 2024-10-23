@@ -1,6 +1,7 @@
 package com.technodot.ftc.twentyfour;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
+import android.annotation.SuppressLint;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -11,9 +12,10 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class AprilTag {
-    private HardwareMap hardwareMap;
-    private Telemetry telemetry;
+    private final HardwareMap hardwareMap;
+    private final Telemetry telemetry;
 
     private AprilTagProcessor aprilTag;
     private VisionPortal visionPortal;
@@ -29,7 +31,7 @@ public class AprilTag {
     public void setCameraStatus(Boolean active) {
         if (!active) {
             visionPortal.stopStreaming();
-        } else if (active) {
+        } else {
             visionPortal.resumeStreaming();
         }
     }
@@ -65,6 +67,7 @@ public class AprilTag {
         visionPortal.setProcessorEnabled(aprilTag, true); // disable or re-enable the aprilTag processor
     }
 
+    @SuppressLint("DefaultLocale")
     public void detectAprilTag() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
