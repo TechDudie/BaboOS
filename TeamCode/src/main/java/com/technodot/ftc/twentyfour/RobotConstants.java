@@ -3,8 +3,8 @@ package com.technodot.ftc.twentyfour;
 public class RobotConstants {
     // BaboBot (Tank Drive)
 
-    public static final float driveLeftMultiplier = -1.0F;
-    public static final float driveRightMultiplier = 1.0F;
+    public static final float driveLeftMultiplier = 1.0F;
+    public static final float driveRightMultiplier = -1.0F;
     public static final int driveTurnDirection = 1;
 
     public static final float clawOpenPosition = 1.0F;

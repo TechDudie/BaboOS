@@ -1,4 +1,4 @@
-package com.technodot.ftc.twentyfour;
+package com.technodot.ftc.twentyfour.maytag;
 
 import android.annotation.SuppressLint;
 
@@ -13,7 +13,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class AprilTag {
+public class MayTagDetector {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
@@ -64,24 +64,27 @@ public class AprilTag {
     }
 
     @SuppressLint("DefaultLocale")
-    public void detectAprilTag() {
+    public double[][] detectAprilTag() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
+        int validDetectionCount = 0;
 
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
-                telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
-                telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
-                telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
-            } else {
-                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
-                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+                telemetry.addLine(String.format("ID %d %s RYB %6.1f %6.1f %6.1f", detection.id, detection.metadata.name, detection.ftcPose.range, detection.ftcPose.yaw, detection.ftcPose.bearing));
+                validDetectionCount += 1;
             }
         }
-        telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
-        telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
-        telemetry.addLine("RBE = Range, Bearing & Elevation");
+
+        double[][] tagDataArray = new double[currentDetections.size()][4];
+        for (int i = 0; i < currentDetections.size(); i++) {
+            AprilTagDetection detection = currentDetections.get(i);
+            tagDataArray[i][0] = detection.id;
+            tagDataArray[i][1] = detection.ftcPose.range;
+            tagDataArray[i][2] = detection.ftcPose.yaw;
+            tagDataArray[i][3] = detection.ftcPose.bearing;
+        }
+        return tagDataArray;
     }
 
     public void closeAprilTag() {

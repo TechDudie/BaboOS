@@ -13,8 +13,9 @@ main class at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboOS.java`<
 
 - **@technodot** the programmer
 - **@akwatson** the builder/thinker
-- **gavvy lasky** the builder/thinker
+- **gavvy lasky** the builder/thinker without discord
 - **cargarzar wild** the experienced sophomore
+- **@sheeparmy** the silly builder/thinker
 - **@silentrunner101** the designer/thinker
 - **@safire1k** the builder/thinker
 - **@somethin_999** the builder/thinker

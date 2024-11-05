@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.technodot.ftc.twentyfour.maytag.MayTag;
 
 @TeleOp(name="BaboOS", group="TechnoCode")
 public class BaboOS extends LinearOpMode {
@@ -19,7 +20,7 @@ public class BaboOS extends LinearOpMode {
     private long slideTimer = 0;
 
     // AprilTag controller
-    AprilTag aprilTag = new AprilTag();
+    MayTag mayTag = new MayTag();
 
     // constants
     public static final float headingConstant = 0.636619772386F;
@@ -48,15 +49,15 @@ public class BaboOS extends LinearOpMode {
             heading -= 1;
             if (RobotConstants.driveTurnDirection > 0) {
                 if (directionX < 0) {
-                    powerRight *= -heading;
-                } else if (directionX > 0) {
                     powerLeft *= heading;
+                } else if (directionX > 0) {
+                    powerRight *= -heading;
                 }
             } else if (RobotConstants.driveTurnDirection < 0) {
                 if (directionX < 0) {
-                    powerLeft *= -heading;
-                } else if (directionX > 0) {
                     powerRight *= heading;
+                } else if (directionX > 0) {
+                    powerLeft *= -heading;
                 }
             }
         }
@@ -141,9 +142,9 @@ public class BaboOS extends LinearOpMode {
 
     private void updateCamera(boolean cameraVisionPortalStartPressed, boolean cameraVisionPortalStopPressed) {
         if (cameraVisionPortalStartPressed) {
-            aprilTag.setCameraStatus(true);
+            mayTag.setCameraStatus(true);
         } else if (cameraVisionPortalStopPressed) {
-            aprilTag.setCameraStatus(false);
+            mayTag.setCameraStatus(false);
         }
     }
 
@@ -160,7 +161,7 @@ public class BaboOS extends LinearOpMode {
         clawMain = hardwareMap.get(Servo.class, "clawMain");
 
         // initialize AprilTag
-        aprilTag.initAprilTag(hardwareMap, telemetry);
+        mayTag.init(hardwareMap, telemetry);
 
         // finish initialization
         telemetry.addData("Status", "Initialized");
@@ -194,11 +195,11 @@ public class BaboOS extends LinearOpMode {
             telemetry.addData("slideTime", slideTime);
             telemetry.addData("slideTimer", slideTimer);
 
-            aprilTag.detectAprilTag();
+            mayTag.update();
             telemetry.update();
         }
 
-        aprilTag.closeAprilTag();
+        mayTag.close();
 
         telemetry.addData("Status", "Stopped");
         telemetry.update();
