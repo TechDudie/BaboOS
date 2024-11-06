@@ -12,7 +12,7 @@ public class DriveTrain {
      * @param directionY    right joystick Y
      */
     public static float[] calculateDrive(float accelX, float accelY, float directionX, float directionY) {
-        return new float[]{accelY, -directionY};
+        return new float[]{-directionY, accelY};
     }
 
     /*

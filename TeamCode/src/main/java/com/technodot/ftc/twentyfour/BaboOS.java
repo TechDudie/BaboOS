@@ -73,7 +73,7 @@ public class BaboOS extends LinearOpMode {
                 }
             } else { // slide is moving
                 if (currentTime >= slideTimer - slideTime + RobotConstants.slideConstant) { // slide can't move
-                    slideMain.setPower(0.0);
+                    slideMain.setPower(RobotConstants.slideIdleSpeed);
                     slideTime = RobotConstants.slideConstant;
                     slideStatus = 0;
                     slideTimer = 0;
@@ -90,7 +90,7 @@ public class BaboOS extends LinearOpMode {
                 }
             } else { // slide is moving
                 if (currentTime >= slideTimer + slideTime) { // slide can't move
-                    slideMain.setPower(0.0);
+                    slideMain.setPower(RobotConstants.slideIdleSpeed);
                     slideTime = 0;
                     slideStatus = 0;
                     slideTimer = 0;
@@ -99,7 +99,7 @@ public class BaboOS extends LinearOpMode {
                 }
             }
         } else { // neither buttons pressed
-            slideMain.setPower(0.0);
+            slideMain.setPower(RobotConstants.slideIdleSpeed);
             if (slideStatus == 1) {
                 slideTime += currentTime - slideTimer;
                 slideStatus = 0;
