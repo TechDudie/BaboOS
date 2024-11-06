@@ -15,6 +15,8 @@ public class RobotConstants {
     public static final float slideSpeedMultiplier = 1.0F;
     public static final float slideRetractMultiplier = 0.88F;
 
+    public static final float robotCameraOffset = 180.0F;
+
     // GavinBot (Car Drive)
 
     /*
@@ -28,5 +30,7 @@ public class RobotConstants {
     public static final int slideConstant = 2000;
     public static final int slideDirection = -1;
     public static final float slideRetractMultiplier = 0.9F;
+
+    public static final float robotCameraOffset = 0.0F;
     */
 }

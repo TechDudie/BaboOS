@@ -1,5 +1,7 @@
 package com.technodot.ftc.twentyfour.maytag;
 
+import com.technodot.ftc.twentyfour.RobotConstants;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -41,15 +43,7 @@ public class MayTagTracker {
      * TODO: check if Copilot's math skills cooked or sold
      *
      * @param tagId   the ID of the detected AprilTag
-     * @param range   the distance from the AprilTag to the robodouble tagX = tagData[0];
-double tagY = tagData[1];
-double tagH = tagData[2];
-
-double posX = tagX + range * Math.cos(Math.toRadians(bearing));
-double posY = tagY + range * Math.sin(Math.toRadians(bearing));
-double posH = (tagH + yaw) % 360;
-
-return new double[]{posX, posY, posH};t in inches
+     * @param range   the distance from the AprilTag to the robot in inches
      * @param yaw     the angle from the AprilTag to the robot in degrees
      * @param bearing the angle from the robot to the AprilTag in degrees
      * @return a double[] containing the x position, y position, and heading in degrees
@@ -61,9 +55,9 @@ return new double[]{posX, posY, posH};t in inches
         double tagY = tagData[1];
         double tagH = tagData[2];
 
-        double posX = tagX + range * Math.cos(Math.toRadians(bearing));
-        double posY = tagY + range * Math.sin(Math.toRadians(bearing));
-        double posH = (tagH + yaw) % 360;
+        double posX = tagX + range / 24 * Math.sin(Math.toRadians(tagH + yaw));
+        double posY = tagY + range / 24 * Math.cos(Math.toRadians(tagH + yaw));
+        double posH = (tagH + yaw - bearing + 180) % 360;
 
         return new double[]{posX, posY, posH};
     }
