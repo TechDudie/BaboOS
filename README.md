@@ -14,12 +14,12 @@ main class at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboOS.java`<
 - **@technodot** the programmer
 - **@akwatson** the builder/thinker
 - **gavvy lasky** the builder/thinker without discord
-- **cargarzar wild** the experienced sophomore
 - **@sheeparmy** the silly builder/thinker
-- **@silentrunner101** the designer/thinker
-- **@safire1k** the builder/thinker
 - **@somethin_999** the builder/thinker
-- **maxx waxy** the muscle
+- **@safire1k** the builder/thinker
+- **@silentrunner101** the designer/thinker
+- **cargarzar wild** the experienced sophomore
+- **maxy waxy** the muscle
 - **@averyisbest65** the utterly useless nusiance
   - MODS, BAN HIM
     - AND BLOW UP HIS HOUSE *a joke*
