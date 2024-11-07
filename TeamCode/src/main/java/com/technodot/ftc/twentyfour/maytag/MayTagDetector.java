@@ -10,8 +10,12 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for detecting and processing AprilTags.
+ */
 @SuppressWarnings("FieldCanBeLocal")
 public class MayTagDetector {
     private HardwareMap hardwareMap;
@@ -21,6 +25,11 @@ public class MayTagDetector {
     private VisionPortal visionPortal;
     private WebcamName cameraFront;
 
+    /**
+     * Sets the camera status to active or inactive.
+     *
+     * @param active true to activate the camera, false to deactivate
+     */
     public void setCameraStatus(Boolean active) {
         if (!active) {
             visionPortal.stopStreaming();
@@ -29,6 +38,12 @@ public class MayTagDetector {
         }
     }
 
+    /**
+     * Initializes the AprilTag detection system.
+     *
+     * @param map   the hardware map to use for initializing hardware devices
+     * @param telem the telemetry object for sending data to the driver station
+     */
     public void initAprilTag(HardwareMap map, Telemetry telem) {
         hardwareMap = map;
         telemetry = telem;
@@ -63,30 +78,35 @@ public class MayTagDetector {
         visionPortal.setProcessorEnabled(aprilTag, true); // disable or re-enable the aprilTag processor
     }
 
+    /**
+     * Detects AprilTags and returns their data.
+     *
+     * @return a 2D array where each row contains the tag ID, range, yaw, and bearing
+     */
     @SuppressLint("DefaultLocale")
     public double[][] detectAprilTag() {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        List<AprilTagDetection> validDetections = new ArrayList<AprilTagDetection>();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
-        int validDetectionCount = 0;
 
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
                 telemetry.addLine(String.format("ID %d %s RYB %6.1f %6.1f %6.1f", detection.id, detection.metadata.name, detection.ftcPose.range, detection.ftcPose.yaw, detection.ftcPose.bearing));
-                validDetectionCount += 1;
+                validDetections.add(detection);
             }
         }
 
-        double[][] tagDataArray = new double[currentDetections.size()][4];
-        for (int i = 0; i < currentDetections.size(); i++) {
-            AprilTagDetection detection = currentDetections.get(i);
-            tagDataArray[i][0] = detection.id;
-            tagDataArray[i][1] = detection.ftcPose.range;
-            tagDataArray[i][2] = detection.ftcPose.yaw;
-            tagDataArray[i][3] = detection.ftcPose.bearing;
+        double[][] tagDataArray = new double[validDetections.size()][4];
+        for (int i = 0; i < validDetections.size(); i++) {
+            AprilTagDetection detection = validDetections.get(i);
+            tagDataArray[i] = new double[]{detection.id, detection.ftcPose.range, detection.ftcPose.yaw, detection.ftcPose.bearing};
         }
         return tagDataArray;
     }
 
+    /**
+     * Closes the AprilTag detection system and releases resources.
+     */
     public void closeAprilTag() {
         visionPortal.close();
     }

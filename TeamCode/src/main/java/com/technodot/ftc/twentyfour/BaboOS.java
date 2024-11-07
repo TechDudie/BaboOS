@@ -12,6 +12,7 @@ public class BaboOS extends LinearOpMode {
     private DcMotor driveLeft;
     private DcMotor driveRight;
     private DcMotor slideMain;
+    private DcMotor clawArm;
     private Servo clawMain;
 
     // variables
@@ -46,9 +47,9 @@ public class BaboOS extends LinearOpMode {
      */
     private void updateClaw(boolean clawOpenPressed, boolean clawClosePressed) {
         if (clawOpenPressed) {
-            clawMain.setPosition(RobotConstants.clawOpenPosition);
+            clawMain.setPosition(HardwareProfile.clawOpenPosition);
         } else if (clawClosePressed) {
-            clawMain.setPosition(RobotConstants.clawClosePosition);
+            clawMain.setPosition(HardwareProfile.clawClosePosition);
         }
     }
 
@@ -66,40 +67,40 @@ public class BaboOS extends LinearOpMode {
 
         if (slideExtendPressed) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
-                if (slideTime < RobotConstants.slideConstant) { // slide can move
-                    slideMain.setPower(RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier);
+                if (slideTime < HardwareProfile.slideConstant) { // slide can move
+                    slideMain.setPower(HardwareProfile.slideDirection * HardwareProfile.slideSpeedMultiplier);
                     slideTimer = currentTime;
                     slideStatus = 1;
                 }
             } else { // slide is moving
-                if (currentTime >= slideTimer - slideTime + RobotConstants.slideConstant) { // slide can't move
-                    slideMain.setPower(RobotConstants.slideIdleSpeed);
-                    slideTime = RobotConstants.slideConstant;
+                if (currentTime >= slideTimer - slideTime + HardwareProfile.slideConstant) { // slide can't move
+                    slideMain.setPower(HardwareProfile.slideIdleSpeed);
+                    slideTime = HardwareProfile.slideConstant;
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    slideMain.setPower(RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier);
+                    slideMain.setPower(HardwareProfile.slideDirection * HardwareProfile.slideSpeedMultiplier);
                 }
             }
         } else if (slideRetractPressed) { // retract slide button pressed
             if (slideStatus == 0) { // slide not moving
                 if (slideTime > 0) { // slide can move
-                    slideMain.setPower(-1.0 * RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier * RobotConstants.slideRetractMultiplier);
+                    slideMain.setPower(-1.0 * HardwareProfile.slideDirection * HardwareProfile.slideSpeedMultiplier * HardwareProfile.slideRetractMultiplier);
                     slideTimer = currentTime;
                     slideStatus = -1;
                 }
             } else { // slide is moving
                 if (currentTime >= slideTimer + slideTime) { // slide can't move
-                    slideMain.setPower(RobotConstants.slideIdleSpeed);
+                    slideMain.setPower(HardwareProfile.slideIdleSpeed);
                     slideTime = 0;
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    slideMain.setPower(-1.0 * RobotConstants.slideDirection * RobotConstants.slideSpeedMultiplier * RobotConstants.slideRetractMultiplier);
+                    slideMain.setPower(-1.0 * HardwareProfile.slideDirection * HardwareProfile.slideSpeedMultiplier * HardwareProfile.slideRetractMultiplier);
                 }
             }
         } else { // neither buttons pressed
-            slideMain.setPower(RobotConstants.slideIdleSpeed);
+            slideMain.setPower(HardwareProfile.slideIdleSpeed);
             if (slideStatus == 1) {
                 slideTime += currentTime - slideTimer;
                 slideStatus = 0;
@@ -130,9 +131,10 @@ public class BaboOS extends LinearOpMode {
         driveLeft = hardwareMap.get(DcMotor.class, "driveLeft");
         driveRight = hardwareMap.get(DcMotor.class, "driveRight");
         slideMain = hardwareMap.get(DcMotor.class, "slideMain");
+        clawArm = hardwareMap.get(DcMotor.class, "clawArm");
         clawMain = hardwareMap.get(Servo.class, "clawMain");
 
-        // initialize AprilTag
+        // initialize MayTag library
         mayTag.init(hardwareMap, telemetry);
 
         // finish initialization

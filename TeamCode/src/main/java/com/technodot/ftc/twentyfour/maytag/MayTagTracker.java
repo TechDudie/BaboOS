@@ -1,19 +1,21 @@
 package com.technodot.ftc.twentyfour.maytag;
 
-import com.technodot.ftc.twentyfour.RobotConstants;
+import com.technodot.ftc.twentyfour.HardwareProfile;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 /**
- * This class tracks the position and heading of the robot relative to multiple AprilTags around the field
+ * This class tracks the position and heading of the robot relative to multiple AprilTags around the field.
  */
 public class MayTagTracker {
-    public double x; // x coordinate position of robot from 0 to 6
-    public double y; // y coordinate position of robot for 0 to 6
-    public double h; // heading of robot of robot in degrees
+    public double x;
+    public double y;
+    public double h;
 
     public final Dictionary<Integer, double[]> tagPositions = new Hashtable<>();
+
+    public static final int unitLength = 24;
 
     public MayTagTracker() {
         // initialize tag positions
@@ -40,7 +42,6 @@ public class MayTagTracker {
 
     /**
      * Calculates the robot's position based on the detected AprilTag.
-     * TODO: check if Copilot's math skills cooked or sold
      *
      * @param tagId   the ID of the detected AprilTag
      * @param range   the distance from the AprilTag to the robot in inches
@@ -55,9 +56,9 @@ public class MayTagTracker {
         double tagY = tagData[1];
         double tagH = tagData[2];
 
-        double posX = tagX + range / 24 * Math.sin(Math.toRadians(tagH + yaw));
-        double posY = tagY + range / 24 * Math.cos(Math.toRadians(tagH + yaw));
-        double posH = (tagH + yaw - bearing + 180) % 360;
+        double posX = tagX + range / unitLength * Math.sin(Math.toRadians(tagH + yaw));
+        double posY = tagY + range / unitLength * Math.cos(Math.toRadians(tagH + yaw));
+        double posH = (tagH + yaw - bearing + 180 - HardwareProfile.robotCameraOffset) % 360;
 
         return new double[]{posX, posY, posH};
     }
@@ -80,7 +81,6 @@ public class MayTagTracker {
 
     /**
      * Updates the robot's position based on multiple detected AprilTags and averages them out.
-     * TODO: check if Copilot's math skills cooked or sold again
      *
      * @param tagDataArray a 2D array where each row contains the tag ID, range, and bearing
      */

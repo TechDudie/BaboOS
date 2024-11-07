@@ -1,5 +1,8 @@
 package com.technodot.ftc.twentyfour;
 
+/**
+ * This class represents the drive train of the robot.
+ */
 public class DriveTrain {
     public static final float headingConstant = 0.636619772386F;
 
