@@ -69,7 +69,7 @@ public class MayTagDetector {
         // aprilTag.setDecimation(3);
 
         // Create the vision portal by using a builder.
-        VisionPortal.Builder builder = new VisionPortal.Builder();
+        VisionPortal.Builder builder = new VisionPortal.Builder().setLiveViewContainerId(0);
         builder.setCamera(cameraFront);
         builder.enableLiveView(true); // enable live view of camera
 
