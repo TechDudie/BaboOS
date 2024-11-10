@@ -56,9 +56,9 @@ public class MayTagTracker {
         double tagY = tagData[1];
         double tagH = tagData[2];
 
-        double posX = tagX + range / unitLength * Math.sin(Math.toRadians(tagH + yaw));
-        double posY = tagY + range / unitLength * Math.cos(Math.toRadians(tagH + yaw));
-        double posH = (tagH + yaw - bearing + 180 - HardwareProfile.robotCameraOffset) % 360;
+        double posX = tagX + (range + HardwareProfile.robotCameraCenterOffset) / unitLength * Math.sin(Math.toRadians(tagH + yaw));
+        double posY = tagY + (range + HardwareProfile.robotCameraCenterOffset) / unitLength * Math.cos(Math.toRadians(tagH + yaw));
+        double posH = (tagH + yaw - bearing + 180 - HardwareProfile.robotCameraAngleOffset) % 360;
 
         return new double[]{posX, posY, posH};
     }
@@ -68,7 +68,7 @@ public class MayTagTracker {
      *
      * @param tagId   the ID of the detected AprilTag
      * @param range   the distance from the robot to the AprilTag in inches
-     *                     * @param yaw     the angle from the AprilTag to the robot in degrees
+     * @param yaw     the angle from the AprilTag to the robot in degrees
      * @param bearing the angle from the robot to the AprilTag in degrees
      */
     public void updateRobotPosition(int tagId, double range, double yaw, double bearing) {

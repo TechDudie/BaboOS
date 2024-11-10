@@ -10,13 +10,25 @@ main class at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboOS.java`<
 
 ### People
 *in order of usefulness*
+*specifically people who have actually done stuff and have been useful, seeeed.*
 
-- **@technodot** the programmer
-- **@akwatson** the builder/thinker
-- **@silentrunner101** the designer/thinker
-- **gavvy lasky** the builder/thinker without discord
+- **@akwatson** the head builder/thinker
+- **@technodot** the programmer/unbuilder/unthinker/major problem
+- **@silentrunner101** the designer/builder
+- **@gavinlasky** the builder/thinker without discord
 - **@sheeparmy** the silly builder/thinker
 - **@somethin_999** the builder/thinker
 - **@safire1k** the builder/thinker
-- **cargarzar wild** the experienced sophomore
-- (we dont talk about the bodies)
+- **@cargarzarwild** the experienced yet missing sophomore
+
+### Results
+*League: **KCW***
+```
++-------+------------------+--------------------------+----------------------------------------+
+| Date  | Name of Event    | Team Members             | Rankings and Statistics                |
++-------+------------------+--------------------------+----------------------------------------+
+| 10/19 | F.L. Schlagle    | AK AJ CR MM YW           |  8th place (0.40 0.80 3.00 84 2-4-0 6) |
++-------+------------------+--------------------------+----------------------------------------+
+| 10/19 | Evening          |                          | 14th place (0.40 0.80 3.00 84 2-4-0 6) |
++-------+------------------+--------------------------+----------------------------------------+
+```

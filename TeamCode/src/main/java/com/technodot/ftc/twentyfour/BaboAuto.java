@@ -15,6 +15,9 @@ public class BaboAuto extends LinearOpMode {
     private DcMotor clawArm;
     private Servo clawMain;
 
+    // variables
+    private long slideTime = 0;
+
     MayTag mayTag = new MayTag();
 
     private static final float autoSpeed = 0.5F;
@@ -39,10 +42,47 @@ public class BaboAuto extends LinearOpMode {
         resetEncoders();
     }
 
-    public void runAuto() {
-        drive(560, 560, 1.5F);
-        drive(2420, -2420, 1.5F);
+    public void clawOpen() {
+        clawMain.setPosition(HardwareProfile.clawOpenPosition);
+        sleep(250);
+    }
 
+    public void clawClose() {
+        clawMain.setPosition(HardwareProfile.clawClosePosition);
+        sleep(250);
+    }
+
+    public void slideExtend() {
+        slideTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() < slideTime + HardwareProfile.slideConstant) {
+            slideMain.setPower(HardwareProfile.slideDirection * HardwareProfile.slideSpeedMultiplier);
+        }
+        slideMain.setPower(0.0F);
+        sleep(250);
+    }
+
+    public void slideRetract() {
+        slideTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() < slideTime + HardwareProfile.slideConstant) {
+            slideMain.setPower(-1.0 * HardwareProfile.slideDirection * HardwareProfile.slideSpeedMultiplier * HardwareProfile.slideRetractMultiplier);
+        }
+        slideMain.setPower(0.0F);
+        sleep(250);
+    }
+
+    public void runAuto() {
+        // drive(1120, 1120, 3.0F);
+        // drive(-4096, 4096, 3.0F);
+        // slideExtend();
+        // drive(560, 560, 2.0F);
+        // clawOpen();
+        // sleep(500);
+        // clawClose();
+        // drive(-560, -560, 2.0F);
+        // slideRetract();
+        drive(7260, 7260, 7);
+        drive(4096, -4096, 5);
+        drive(4096, 4096, 5);
     }
 
     @SuppressWarnings("UnusedDeclaration")

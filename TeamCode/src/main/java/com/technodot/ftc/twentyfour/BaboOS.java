@@ -147,7 +147,8 @@ public class BaboOS extends LinearOpMode {
             targetPosition = HardwareProfile.armClosePosition;
             armStatus = -2;
         } else {
-            clawArm.setPower(0.3F);
+            clawArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            clawArm.setPower(-0.3F);
             return;
         }
 

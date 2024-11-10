@@ -29,5 +29,6 @@ public class HardwareProfile {
     public static final int armOpenPosition = -75;
     public static final float armSpeed = 0.4F;
 
-    public static final float robotCameraOffset = 180.0F;
+    public static final float robotCameraAngleOffset = 180.0F;
+    public static final float robotCameraCenterOffset = 0.4F;
 }
