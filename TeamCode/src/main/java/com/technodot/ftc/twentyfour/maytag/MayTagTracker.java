@@ -1,5 +1,7 @@
 package com.technodot.ftc.twentyfour.maytag;
 
+import com.technodot.ftc.twentyfour.Configuration;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -54,9 +56,9 @@ public class MayTagTracker {
         double tagY = tagData[1];
         double tagH = tagData[2];
 
-        double posX = tagX + (range + HardwareProfile.robotCameraCenterOffset) / unitLength * Math.sin(Math.toRadians(tagH + yaw));
-        double posY = tagY + (range + HardwareProfile.robotCameraCenterOffset) / unitLength * Math.cos(Math.toRadians(tagH + yaw));
-        double posH = (tagH + yaw - bearing + 180 - HardwareProfile.robotCameraAngleOffset) % 360;
+        double posX = tagX + (range + Configuration.robotCameraCenterOffset) / unitLength * Math.sin(Math.toRadians(tagH + yaw));
+        double posY = tagY + (range + Configuration.robotCameraCenterOffset) / unitLength * Math.cos(Math.toRadians(tagH + yaw));
+        double posH = (tagH + yaw - bearing + 180 - Configuration.robotCameraAngleOffset) % 360;
 
         return new double[]{posX, posY, posH};
     }

@@ -68,24 +68,24 @@ public class DeviceDrive {
                 float total = leftX + leftY;
                 float difference = leftY - leftX;
                 boolean drive = leftY >= 0;
-                boolean rotate = leftX < 0;
+                boolean rotate = leftX >= 0;
 
                 switch ((drive ? 2 : 0) + (rotate ? 1 : 0)) {
-                    case 0: // quadrant I
-                        calculateLeft = maximum;
-                        calculateRight = difference;
-                        break;
-                    case 1: // quadrant II
+                    case 0: // quadrant II
                         calculateLeft = total;
                         calculateRight = maximum;
                         break;
-                    case 2: // quadrant IV
-                        calculateLeft = total;
-                        calculateRight = -maximum;
+                    case 1: // quadrant I
+                        calculateLeft = maximum;
+                        calculateRight = difference;
                         break;
-                    case 3: // quadrant III
+                    case 2: // quadrant III
                         calculateLeft = -maximum;
                         calculateRight = difference;
+                        break;
+                    case 3: // quadrant IIV
+                        calculateLeft = total;
+                        calculateRight = -maximum;
                         break;
                 }
                 break;
@@ -116,7 +116,9 @@ public class DeviceDrive {
 
         switch (drivetrain) {
             case TANK:
-                powerFrontLeft = -calculateLeft;
+                // TODO: figure out issue with the negative
+                // powerFrontLeft = -calculateLeft;
+                powerFrontLeft = calculateLeft;
                 powerFrontRight = calculateRight;
             case MECANUM:
                 // TODO: get those idiots to build a mecanum chassis *that works*
