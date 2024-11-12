@@ -25,6 +25,20 @@ public class MayTag {
     }
 
     /**
+     * Sets the status of the camera.
+     *
+     * @param startPressed startPressed button
+     * @param stopPressed stopPressed button
+     */
+    public void updateCamera(Boolean startPressed, Boolean stopPressed) {
+        if (startPressed) {
+            setCameraStatus(true);
+        } else if (stopPressed) {
+            setCameraStatus(false);
+        }
+    }
+
+    /**
      * Initializes the MayTag system with the given hardware map and telemetry.
      *
      * @param map   the hardware map to initialize the detector

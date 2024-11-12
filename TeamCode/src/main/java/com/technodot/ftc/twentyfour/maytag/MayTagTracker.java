@@ -1,7 +1,5 @@
 package com.technodot.ftc.twentyfour.maytag;
 
-import com.technodot.ftc.twentyfour.HardwareProfile;
-
 import java.util.Dictionary;
 import java.util.Hashtable;
 
