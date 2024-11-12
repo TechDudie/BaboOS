@@ -34,6 +34,14 @@ public class DeviceDrive {
         }
     }
 
+    public void updatePreciseMode(boolean preciseMode) {
+        if (preciseMode) {
+            speedMultiplier = Configuration.drivePreciseModeMultiplier;
+        } else {
+            speedMultiplier = 1.0F;
+        }
+    }
+
     public void updateDrive(float leftX, float leftY, float rightX, float rightY) {
         float powerFrontLeft = 0.0F;
         float powerFrontRight = 0.0F;
