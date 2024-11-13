@@ -67,29 +67,30 @@ public class DeviceDrive {
                 float maximum = Math.max(Math.abs(leftX), Math.abs(leftY));
                 float total = leftX + leftY;
                 float difference = leftY - leftX;
-                boolean drive = leftY >= 0;
-                boolean rotate = leftX >= 0;
+                boolean drive = leftY < 0;
+                boolean rotate = leftX < 0;
 
                 switch ((drive ? 2 : 0) + (rotate ? 1 : 0)) {
-                    case 0: // quadrant II
+                    case 0: // quadrant I
                         calculateLeft = total;
                         calculateRight = maximum;
                         break;
-                    case 1: // quadrant I
+                    case 1: // quadrant II
                         calculateLeft = maximum;
                         calculateRight = difference;
                         break;
-                    case 2: // quadrant III
+                    case 2: // quadrant IV
                         calculateLeft = -maximum;
                         calculateRight = difference;
                         break;
-                    case 3: // quadrant IIV
+                    case 3: // quadrant III
                         calculateLeft = total;
                         calculateRight = -maximum;
                         break;
                 }
                 break;
             case TECHNODRIVE_V1:
+                // TODO: test and rework
                 float heading = (float) (Math.atan(rightX / rightY) * 0.636619772386F);
                 if (rightX < 0) {
                     heading *= -1;
@@ -98,6 +99,7 @@ public class DeviceDrive {
                     heading += 2;
                 }
                 heading -= 1;
+                heading *= -1;
                 if (Configuration.driveTurnDirection == 1) {
                     if (rightX < 0) {
                         calculateLeft *= heading;
@@ -116,9 +118,7 @@ public class DeviceDrive {
 
         switch (drivetrain) {
             case TANK:
-                // TODO: figure out issue with the negative
-                // powerFrontLeft = -calculateLeft;
-                powerFrontLeft = calculateLeft;
+                powerFrontLeft = -calculateLeft;
                 powerFrontRight = calculateRight;
             case MECANUM:
                 // TODO: get those idiots to build a mecanum chassis *that works*
