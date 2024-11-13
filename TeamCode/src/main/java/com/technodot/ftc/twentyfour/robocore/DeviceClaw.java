@@ -48,8 +48,6 @@ public class DeviceClaw {
             targetPosition = Configuration.armClosePosition;
             armStatus = -2;
         } else {
-            clawArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            // clawArm.setPower(Configuration.armIdleSpeed);
             return;
         }
 

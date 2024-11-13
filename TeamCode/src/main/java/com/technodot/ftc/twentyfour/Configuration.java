@@ -10,7 +10,7 @@ public class Configuration {
     public static final float driveLeftMultiplier = 1.0F;
     public static final float driveRightMultiplier = 1.0F;
     public static final int driveDirection = -1;
-    public static final int driveTurnDirection = 1;
+    public static final int driveTurnDirection = -1;
     public static final float drivePreciseModeMultiplier = 0.5F;
 
     // claw
@@ -21,7 +21,6 @@ public class Configuration {
     public static final int armClosePosition = 0;
     public static final int armOpenPosition = -75;
     public static final float armSpeed = 0.4F;
-    public static final float armIdleSpeed = 0.1F;
     public static final float armPreciseModeMultiplier = 0.5F;
 
     // slide

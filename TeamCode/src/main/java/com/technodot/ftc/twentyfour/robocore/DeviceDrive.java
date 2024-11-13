@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technodot.ftc.twentyfour.Configuration;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class DeviceDrive {
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -13,11 +15,14 @@ public class DeviceDrive {
     public Drivetrain drivetrain;
     public Drivetype drivetype;
 
+    private Telemetry telemetry;
+
     public float speedMultiplier = 1.0F;
 
-    public DeviceDrive(HardwareMap hardwareMap, Drivetrain drivetrainType, Drivetype drivetypeType) {
+    public DeviceDrive(HardwareMap hardwareMap, Drivetrain drivetrainType, Drivetype drivetypeType, Telemetry telemetryHandler) {
         drivetrain = drivetrainType;
         drivetype = drivetypeType;
+        telemetry = telemetryHandler;
 
         switch (drivetrain) {
             case TANK:
@@ -48,102 +53,124 @@ public class DeviceDrive {
         float powerBackLeft = 0.0F;
         float powerBackRight = 0.0F;
 
-        float calculateLeft = 0.0F;
-        float calculateRight = 0.0F;
+        if (drivetrain != Drivetrain.MECANUM) {
+            float calculateLeft = 0.0F;
+            float calculateRight = 0.0F;
 
-        switch (drivetype) {
-            case TANK:
-                if (Configuration.driveTurnDirection == 1) {
-                    calculateLeft = leftY;
-                    calculateRight = rightY;
-                } else if (Configuration.driveTurnDirection == -1) {
-                    calculateLeft = rightY;
-                    calculateRight = leftY;
-                }
-                break;
-            case ARCADE:
-                leftX *= Configuration.driveTurnDirection;
+            switch (drivetype) {
+                case TANK:
+                    if (Configuration.driveTurnDirection == 1) {
+                        calculateLeft = leftY;
+                        calculateRight = rightY;
+                    } else if (Configuration.driveTurnDirection == -1) {
+                        calculateLeft = rightY;
+                        calculateRight = leftY;
+                    }
+                    break;
+                case ARCADE:
+                    leftX *= Configuration.driveTurnDirection;
 
-                float maximum = Math.max(Math.abs(leftX), Math.abs(leftY));
-                float total = leftX + leftY;
-                float difference = leftY - leftX;
-                boolean drive = leftY < 0;
-                boolean rotate = leftX < 0;
+                    float maximum = Math.max(Math.abs(leftX), Math.abs(leftY));
+                    float total = leftX + leftY;
+                    float difference = leftY - leftX;
 
-                switch ((drive ? 2 : 0) + (rotate ? 1 : 0)) {
-                    case 0: // quadrant I
-                        calculateLeft = total;
-                        calculateRight = maximum;
-                        break;
-                    case 1: // quadrant II
-                        calculateLeft = maximum;
-                        calculateRight = difference;
-                        break;
-                    case 2: // quadrant IV
-                        calculateLeft = -maximum;
-                        calculateRight = difference;
-                        break;
-                    case 3: // quadrant III
-                        calculateLeft = total;
-                        calculateRight = -maximum;
-                        break;
-                }
-                break;
-            case TECHNODRIVE_V1:
-                // TODO: test and rework
-                float heading = (float) (Math.atan(rightX / rightY) * 0.636619772386F);
-                if (rightX < 0) {
+                    if (leftY >= 0) {
+                        if (leftX >= 0) {
+                            telemetry.addLine("skibidi quadrant I");
+                            calculateLeft = maximum;
+                            calculateRight = difference;
+                        } else {
+                            telemetry.addLine("skibidi quadrant II");
+                            calculateLeft = total;
+                            calculateRight = maximum;
+                        }
+                    } else {
+                        if (leftX >= 0) {
+                            telemetry.addLine("skibidi quadrant IV");
+                            calculateLeft = total;
+                            calculateRight = -maximum;
+                        } else {
+                            telemetry.addLine("skibidi quadrant III");
+                            calculateLeft = -maximum;
+                            calculateRight = difference;
+                        }
+                    }
+                    break;
+                case TECHNODRIVE_V1:
+                    // TODO: test and rework
+                    float heading = (float) (Math.atan(rightX / rightY) * 0.636619772386F);
+                    if (rightX < 0) {
+                        heading *= -1;
+                    }
+                    if (rightY < 0) {
+                        heading += 2;
+                    }
+                    heading -= 1;
                     heading *= -1;
-                }
-                if (rightY < 0) {
-                    heading += 2;
-                }
-                heading -= 1;
-                heading *= -1;
-                if (Configuration.driveTurnDirection == 1) {
-                    if (rightX < 0) {
-                        calculateLeft *= heading;
-                    } else if (rightX > 0) {
-                        calculateRight *= -heading;
+                    if (Configuration.driveTurnDirection == 1) {
+                        if (rightX < 0) {
+                            calculateLeft *= heading;
+                        } else if (rightX > 0) {
+                            calculateRight *= -heading;
+                        }
+                    } else if (Configuration.driveTurnDirection == -1) {
+                        if (rightX < 0) {
+                            calculateRight *= heading;
+                        } else if (rightX > 0) {
+                            calculateLeft *= -heading;
+                        }
                     }
-                } else if (Configuration.driveTurnDirection == -1) {
-                    if (rightX < 0) {
-                        calculateRight *= heading;
-                    } else if (rightX > 0) {
-                        calculateLeft *= -heading;
-                    }
-                }
-                break;
-        }
+                    break;
+            }
 
-        switch (drivetrain) {
-            case TANK:
-                powerFrontLeft = -calculateLeft;
-                powerFrontRight = calculateRight;
-            case MECANUM:
-                // TODO: get those idiots to build a mecanum chassis *that works*
-                break;
-            case FOURWHEEL:
-                powerFrontLeft = calculateLeft;
-                powerBackLeft = calculateLeft;
-                powerFrontRight = calculateRight;
-                powerBackRight = calculateRight;
-                break;
-        }
+            switch (drivetrain) {
+                case TANK:
+                    powerFrontLeft = -calculateLeft;
+                    powerFrontRight = calculateRight;
+                    break;
+                case FOURWHEEL:
+                    powerFrontLeft = calculateLeft;
+                    powerBackLeft = calculateLeft;
+                    powerFrontRight = calculateRight;
+                    powerBackRight = calculateRight;
+                    break;
+            }
 
-        float totalLeft = speedMultiplier * Configuration.driveDirection * Configuration.driveLeftMultiplier;
-        float totalRight = speedMultiplier * Configuration.driveDirection * Configuration.driveRightMultiplier;
+            float totalLeft = speedMultiplier * Configuration.driveDirection * Configuration.driveLeftMultiplier;
+            float totalRight = speedMultiplier * Configuration.driveDirection * Configuration.driveRightMultiplier;
 
-        powerFrontLeft *= totalLeft;
-        powerBackLeft *= totalLeft;
-        powerFrontRight *= totalRight;
-        powerBackRight *= totalRight;
+            powerFrontLeft *= totalLeft;
+            powerBackLeft *= totalLeft;
+            powerFrontRight *= totalRight;
+            powerBackRight *= totalRight;
 
-        frontLeft.setPower(powerFrontLeft);
-        frontRight.setPower(powerFrontRight);
-        if (drivetrain != Drivetrain.TANK) {
+            frontLeft.setPower(powerFrontLeft);
+            frontRight.setPower(powerFrontRight);
+            if (drivetrain != Drivetrain.TANK) {
+                backLeft.setPower(powerBackLeft);
+                backRight.setPower(powerBackRight);
+            }
+        } else {
+            // Drivetrain.MECANUM has override controls
+
+            leftY *= Configuration.driveDirection;
+            rightX *= Configuration.driveTurnDirection;
+
+            powerFrontLeft = leftY - leftX - rightX;
+            powerFrontRight = leftY + leftX + rightX;
+            powerBackLeft = -(leftY + leftX - rightX);
+            powerBackRight = -(leftY - leftX + rightX);
+
+            powerFrontLeft *= speedMultiplier;
+            powerFrontRight *= speedMultiplier;
+            powerBackLeft *= speedMultiplier;
+            powerBackRight *= speedMultiplier;
+
+            frontLeft.setPower(powerFrontLeft);
+            frontRight.setPower(powerFrontRight);
             backLeft.setPower(powerBackLeft);
             backRight.setPower(powerBackRight);
         }
+
     }
 }

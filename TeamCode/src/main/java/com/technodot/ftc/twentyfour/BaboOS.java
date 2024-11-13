@@ -14,9 +14,6 @@ import com.technodot.ftc.twentyfour.robocore.Drivetype;
 @TeleOp(name="BaboOS", group="TechnoCode")
 public class BaboOS extends LinearOpMode {
 
-    public final Drivetrain drivetrain = Drivetrain.TANK;
-    public final Drivetype drivetype = Drivetype.ARCADE;
-
     // controllers
     DeviceDrive deviceDrive;
     DeviceClaw deviceClaw;
@@ -26,7 +23,7 @@ public class BaboOS extends LinearOpMode {
     @Override
     public void runOpMode() {
         // initialize devices
-        deviceDrive = new DeviceDrive(hardwareMap, drivetrain, drivetype);
+        deviceDrive = new DeviceDrive(hardwareMap, Configuration.driveTrainType, Configuration.driveControlType, telemetry);
         deviceClaw = new DeviceClaw(hardwareMap);
         deviceSlide = new DeviceSlide(hardwareMap);
 
