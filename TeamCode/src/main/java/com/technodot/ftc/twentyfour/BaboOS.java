@@ -23,13 +23,15 @@ public class BaboOS extends LinearOpMode {
     @Override
     public void runOpMode() {
         // initialize devices
-        deviceDrive = new DeviceDrive(hardwareMap, Configuration.driveTrainType, Configuration.driveControlType, telemetry);
+        deviceDrive = new DeviceDrive(hardwareMap, Configuration.driveTrainType, Configuration.driveControlType);
         deviceClaw = new DeviceClaw(hardwareMap);
         deviceSlide = new DeviceSlide(hardwareMap);
 
         // initialize MayTag library
-        mayTag = new MayTag();
-        mayTag.init(hardwareMap, telemetry);
+        if (Configuration.ENABLE_TELEOP_MAYTAG) {
+            mayTag = new MayTag(hardwareMap, telemetry);
+        }
+
 
         // finish initialization
         telemetry.addData("Status", "Initialized");
@@ -63,13 +65,18 @@ public class BaboOS extends LinearOpMode {
             deviceClaw.updateArm(armOpenPressed, armClosePressed);
             deviceClaw.updateClaw(clawOpenPressed, clawClosePressed);
             deviceSlide.updateSlide(slideExtendPressed, slideRetractPressed);
-            mayTag.updateCamera(cameraVisionPortalStartPressed, cameraVisionPortalStopPressed);
 
-            mayTag.update();
+            if (Configuration.ENABLE_TELEOP_MAYTAG) {
+                mayTag.updateCamera(cameraVisionPortalStartPressed, cameraVisionPortalStopPressed);
+                mayTag.update();
+            }
+
             telemetry.update();
         }
 
-        mayTag.close();
+        if (Configuration.ENABLE_TELEOP_MAYTAG) {
+            mayTag.close();
+        }
 
         telemetry.addData("Status", "Stopped");
         telemetry.update();

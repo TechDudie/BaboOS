@@ -4,6 +4,10 @@ import com.technodot.ftc.twentyfour.robocore.Drivetrain;
 import com.technodot.ftc.twentyfour.robocore.Drivetype;
 
 public class Configuration {
+    // enable controls
+    public static final boolean ENABLE_TELEOP_MAYTAG = false;
+    public static final boolean ENABLE_AUTO_MAYTAG = true;
+
     // drive
     public static final Drivetrain driveTrainType = Drivetrain.TANK;
     public static final Drivetype driveControlType = Drivetype.ARCADE;

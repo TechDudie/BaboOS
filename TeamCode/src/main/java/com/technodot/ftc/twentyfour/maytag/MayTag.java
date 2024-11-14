@@ -15,6 +15,11 @@ public class MayTag {
 
     private Telemetry telemetry;
 
+    public MayTag(HardwareMap map, Telemetry telem) {
+        detector.initAprilTag(map, telem);
+        telemetry = telem;
+    }
+
     /**
      * Sets the status of the camera.
      *
@@ -36,17 +41,6 @@ public class MayTag {
         } else if (stopPressed) {
             setCameraStatus(false);
         }
-    }
-
-    /**
-     * Initializes the MayTag system with the given hardware map and telemetry.
-     *
-     * @param map   the hardware map to initialize the detector
-     * @param telem the telemetry to use for logging
-     */
-    public void init(HardwareMap map, Telemetry telem) {
-        detector.initAprilTag(map, telem);
-        telemetry = telem;
     }
 
     /**

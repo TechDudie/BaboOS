@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technodot.ftc.twentyfour.Configuration;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 public class DeviceDrive {
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -15,14 +13,11 @@ public class DeviceDrive {
     public Drivetrain drivetrain;
     public Drivetype drivetype;
 
-    private Telemetry telemetry;
-
     public float speedMultiplier = 1.0F;
 
-    public DeviceDrive(HardwareMap hardwareMap, Drivetrain drivetrainType, Drivetype drivetypeType, Telemetry telemetryHandler) {
+    public DeviceDrive(HardwareMap hardwareMap, Drivetrain drivetrainType, Drivetype drivetypeType) {
         drivetrain = drivetrainType;
         drivetype = drivetypeType;
-        telemetry = telemetryHandler;
 
         switch (drivetrain) {
             case TANK:
@@ -76,21 +71,17 @@ public class DeviceDrive {
 
                     if (leftY >= 0) {
                         if (leftX >= 0) {
-                            telemetry.addLine("skibidi quadrant I");
                             calculateLeft = maximum;
                             calculateRight = difference;
                         } else {
-                            telemetry.addLine("skibidi quadrant II");
                             calculateLeft = total;
                             calculateRight = maximum;
                         }
                     } else {
                         if (leftX >= 0) {
-                            telemetry.addLine("skibidi quadrant IV");
                             calculateLeft = total;
                             calculateRight = -maximum;
                         } else {
-                            telemetry.addLine("skibidi quadrant III");
                             calculateLeft = -maximum;
                             calculateRight = difference;
                         }
