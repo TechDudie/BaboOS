@@ -21,6 +21,23 @@ Auto at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboAuto.java`<br>
 - **@safire1k** the builder/thinker
 - **@cargarzarwild** the experienced yet missing sophomore
 
+### Controls
+
+- **Left Joystick** - Movement (depends on selected modes)
+- **Right Joystick** - Movement (depends on selected modes)
+- **Left Trigger** - Precise Mode
+- **Right Trigger** - Raise Claw Arm (Force)
+- **Left Bumper** - Extend Slide
+- **Right Bumper** - Retract Slide
+- **A Button** - Open Claw
+- **B Button** - Close Claw
+- **X Button** - Lower Claw Arm
+- **Y Button** - Raise Claw Arm
+- **D-Pad Up** - Extend Slide (Override)
+- **D-Pad Down** - Lower Slide (Override)
+- **D-Pad Left** - Enable Camera Processing
+- **D-Pad Right** - Disable Camera Processing
+
 ### Results
 *League: **KCW***
 ```
