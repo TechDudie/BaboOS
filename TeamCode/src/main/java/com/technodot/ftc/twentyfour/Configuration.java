@@ -24,14 +24,15 @@ public class Configuration {
     // claw arm
     public static final int armClosePosition = 0;
     public static final int armOpenPosition = -75;
-    public static final float armSpeed = 0.4F;
+    public static final float armSpeed = 1.0F;
     public static final float armPreciseModeMultiplier = 0.5F;
 
     // slide
-    public static final int slideConstant = 3000;
+    public static final int slideConstant = 3200;
     public static final int slideDirection = 1;
     public static final float slideSpeedMultiplier = 1.0F;
     public static final float slideRetractMultiplier = 0.10F;
+    public static final float slidePreciseModeMultiplier = 0.3F;
 
     // camera
     public static final float robotCameraAngleOffset = 180.0F;

@@ -55,4 +55,10 @@ public class DeviceClaw {
         clawArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         clawArm.setPower(Configuration.armSpeed * armStatus * speedMultiplier);
     }
+
+    public void updateArmForce(boolean armCloseForce) {
+        if (armCloseForce) {
+            clawArm.setPower(Configuration.armSpeed * -1.0F * speedMultiplier);
+        }
+    }
 }

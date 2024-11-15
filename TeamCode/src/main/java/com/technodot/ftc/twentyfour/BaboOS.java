@@ -44,13 +44,14 @@ public class BaboOS extends LinearOpMode {
             float leftY = gamepad1.left_stick_y;
             float rightX = gamepad1.right_stick_x;
             float rightY = gamepad1.right_stick_y;
-            boolean preciseMode = gamepad1.left_trigger > 0.5;
             boolean clawOpenPressed = gamepad1.a;
             boolean clawClosePressed = gamepad1.b;
             boolean armOpenPressed = gamepad1.x;
             boolean armClosePressed = gamepad1.y;
             boolean slideExtendPressed = gamepad1.left_bumper;
             boolean slideRetractPressed = gamepad1.right_bumper;
+            boolean preciseMode = gamepad1.left_trigger > 0.5;
+            boolean armCloseForcePressed = gamepad1.right_trigger > 0.5;
             boolean slideExtendForcePressed = gamepad1.dpad_up;
             boolean slideRetractForcePressed = gamepad1.dpad_down;
             boolean cameraVisionPortalStartPressed = gamepad1.dpad_left;
@@ -63,8 +64,10 @@ public class BaboOS extends LinearOpMode {
             // TODO: update slide calibration
             deviceDrive.updateDrive(leftX, leftY, rightX, rightY);
             deviceClaw.updateArm(armOpenPressed, armClosePressed);
+            deviceClaw.updateArmForce(armCloseForcePressed);
             deviceClaw.updateClaw(clawOpenPressed, clawClosePressed);
-            deviceSlide.updateSlide(slideExtendPressed, slideRetractPressed);
+            deviceSlide.updateSlide(slideExtendPressed, slideRetractPressed, slideExtendForcePressed, slideRetractForcePressed);
+            deviceSlide.updateSlideForce(slideExtendPressed, slideRetractPressed, slideExtendForcePressed, slideRetractForcePressed);
 
             if (Configuration.ENABLE_TELEOP_MAYTAG) {
                 mayTag.updateCamera(cameraVisionPortalStartPressed, cameraVisionPortalStopPressed);

@@ -19,7 +19,7 @@ public class DeviceSlide {
 
     public void updatePreciseMode(boolean preciseMode) {
         if (preciseMode) {
-            speedMultiplier = Configuration.armPreciseModeMultiplier;
+            speedMultiplier = Configuration.slidePreciseModeMultiplier;
         } else {
             speedMultiplier = 1.0F;
         }
@@ -30,7 +30,7 @@ public class DeviceSlide {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void updateSlide(boolean slideExtend, boolean slideRetract) {
+    public void updateSlide(boolean slideExtend, boolean slideRetract, boolean slideExtendForce, boolean slideRetractForce) {
         long currentTime = System.currentTimeMillis();
 
         if (slideExtend) { // extend slide button pressed
@@ -78,6 +78,17 @@ public class DeviceSlide {
                 slideStatus = 0;
                 slideTimer = 0;
             }
+        }
+    }
+
+    public void updateSlideForce(boolean slideExtend, boolean slideRetract, boolean slideExtendForce, boolean slideRetractForce) {
+        if (slideExtendForce) {
+            slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slidePreciseModeMultiplier * speedMultiplier);
+        } else if (slideRetractForce) {
+            slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier * Configuration.slidePreciseModeMultiplier * speedMultiplier);
+        } else if (slideExtend || slideRetract) {
+        } else {
+            slideMain.setPower(0.0);
         }
     }
 }
