@@ -86,8 +86,7 @@ public class DeviceSlide {
             slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slidePreciseModeMultiplier * speedMultiplier);
         } else if (slideRetractForce) {
             slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier * Configuration.slidePreciseModeMultiplier * speedMultiplier);
-        } else if (slideExtend || slideRetract) {
-        } else {
+        } else if (!(slideExtend || slideRetract)) {
             slideMain.setPower(0.0);
         }
     }

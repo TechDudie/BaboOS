@@ -42,6 +42,7 @@ public class DeviceDrive {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void updateDrive(float leftX, float leftY, float rightX, float rightY) {
         float powerFrontLeft = 0.0F;
         float powerFrontRight = 0.0F;

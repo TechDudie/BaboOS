@@ -2,14 +2,10 @@ package com.technodot.ftc.twentyfour;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.technodot.ftc.twentyfour.maytag.MayTag;
 import com.technodot.ftc.twentyfour.robocore.DeviceClaw;
 import com.technodot.ftc.twentyfour.robocore.DeviceDrive;
 import com.technodot.ftc.twentyfour.robocore.DeviceSlide;
-import com.technodot.ftc.twentyfour.robocore.Drivetrain;
-import com.technodot.ftc.twentyfour.robocore.Drivetype;
 
 @TeleOp(name="BaboOS", group="TechnoCode")
 public class BaboOS extends LinearOpMode {
@@ -61,7 +57,6 @@ public class BaboOS extends LinearOpMode {
             deviceClaw.updatePreciseMode(preciseMode);
             deviceSlide.updatePreciseMode(preciseMode);
 
-            // TODO: update slide calibration
             deviceDrive.updateDrive(leftX, leftY, rightX, rightY);
             deviceClaw.updateArm(armOpenPressed, armClosePressed);
             deviceClaw.updateArmForce(armCloseForcePressed);
