@@ -4,7 +4,7 @@ This repository contains [the code](https://github.com/TechDudie/BaboOS/tree/mai
 
 ### Helpful Crap
 
-requires Android Studio 2024.2.1 Ladybug + Java 23<br>
+requires Android Studio 2024.2.1 Ladybug + Java 21<br>
 TeleOp at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboOS.java`<br>
 Auto at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboAuto.java`<br>
 
