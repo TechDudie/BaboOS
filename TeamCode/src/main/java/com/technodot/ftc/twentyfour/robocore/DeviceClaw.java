@@ -44,14 +44,13 @@ public class DeviceClaw extends Device {
         if (armOpen) {
             targetPosition = Configuration.armOpenPosition;
             armStatus = 1;
+            clawArm.setTargetPosition(targetPosition);
         } else if (armClose) {
             targetPosition = Configuration.armClosePosition;
             armStatus = -2;
-        } else {
-            return;
+            clawArm.setTargetPosition(targetPosition);
         }
 
-        clawArm.setTargetPosition(targetPosition);
         clawArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         clawArm.setPower(Configuration.armSpeed * armStatus * speedMultiplier);
     }
