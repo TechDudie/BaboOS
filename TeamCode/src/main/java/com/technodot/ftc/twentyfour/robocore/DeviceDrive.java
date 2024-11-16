@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technodot.ftc.twentyfour.Configuration;
 
-public class DeviceDrive {
+public class DeviceDrive extends Device {
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;

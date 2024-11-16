@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.technodot.ftc.twentyfour.Configuration;
 
-public class DeviceSlide {
+public class DeviceSlide extends Device {
     public DcMotor slideMain;
 
     private int slideStatus = 0;

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.technodot.ftc.twentyfour.Configuration;
 
-public class DeviceClaw {
+public class DeviceClaw extends Device {
     public Servo clawMain;
     public DcMotor clawArm;
 
