@@ -36,7 +36,7 @@ public class DeviceSlide extends Device {
         if (slideExtend) { // extend slide button pressed
             if (slideStatus == 0) { // slide not moving
                 if (slideTime < Configuration.slideConstant) { // slide can move
-                    slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier * speedMultiplier);
+                    slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier);
                     slideTimer = currentTime;
                     slideStatus = 1;
                 }
@@ -47,13 +47,13 @@ public class DeviceSlide extends Device {
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier * speedMultiplier);
+                    slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier);
                 }
             }
         } else if (slideRetract) { // retract slide button pressed
             if (slideStatus == 0) { // slide not moving
                 if (slideTime > 0) { // slide can move
-                    slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier * speedMultiplier);
+                    slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier);
                     slideTimer = currentTime;
                     slideStatus = -1;
                 }
@@ -64,7 +64,7 @@ public class DeviceSlide extends Device {
                     slideStatus = 0;
                     slideTimer = 0;
                 } else if (slideStatus != 0) { // slide is moving
-                    slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier * speedMultiplier);
+                    slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier);
                 }
             }
         } else { // neither buttons pressed
@@ -83,9 +83,9 @@ public class DeviceSlide extends Device {
 
     public void updateSlideForce(boolean slideExtend, boolean slideRetract, boolean slideExtendForce, boolean slideRetractForce) {
         if (slideExtendForce) {
-            slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slidePreciseModeMultiplier * speedMultiplier);
+            slideMain.setPower(Configuration.slideDirection * Configuration.slideSpeedMultiplier);
         } else if (slideRetractForce) {
-            slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier * Configuration.slidePreciseModeMultiplier * speedMultiplier);
+            slideMain.setPower(-1.0 * Configuration.slideDirection * Configuration.slideSpeedMultiplier * Configuration.slideRetractMultiplier);
         } else if (!(slideExtend || slideRetract)) {
             slideMain.setPower(0.0);
         }

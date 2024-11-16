@@ -42,8 +42,8 @@ public class BaboOS extends LinearOpMode {
             float rightY = gamepad1.right_stick_y;
             boolean clawOpenPressed = gamepad1.a;
             boolean clawClosePressed = gamepad1.b;
-            boolean armOpenPressed = gamepad1.x;
-            boolean armClosePressed = gamepad1.y;
+            boolean armClosePressed = gamepad1.x;
+            boolean armOpenPressed = gamepad1.y;
             boolean slideExtendPressed = gamepad1.left_bumper;
             boolean slideRetractPressed = gamepad1.right_bumper;
             boolean preciseMode = gamepad1.left_trigger > 0.5;
@@ -69,6 +69,7 @@ public class BaboOS extends LinearOpMode {
                 mayTag.update();
             }
 
+            telemetry.addData("armEncoder", deviceClaw.clawArm.getCurrentPosition());
             telemetry.update();
         }
 

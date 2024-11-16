@@ -16,6 +16,10 @@ public class BaboAuto extends LinearOpMode {
     DeviceSlide deviceSlide;
     MayTag mayTag;
 
+    public void runAuto() {
+        deviceDrive.runDrive(-0.5F, -0.5F, 1.0F);
+    }
+
     @Override
     public void runOpMode() {
         // initialize devices
@@ -33,6 +37,8 @@ public class BaboAuto extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+        runAuto();
+
         while (opModeIsActive()) {
             if (Configuration.ENABLE_AUTO_MAYTAG) {
                 mayTag.update();

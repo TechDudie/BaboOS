@@ -6,7 +6,7 @@ import com.technodot.ftc.twentyfour.robocore.Drivetype;
 public class Configuration {
     // enable controls
     public static final boolean ENABLE_TELEOP_MAYTAG = false;
-    public static final boolean ENABLE_AUTO_MAYTAG = true;
+    public static final boolean ENABLE_AUTO_MAYTAG = false; // TODO: for now
 
     // drive
     public static final Drivetrain driveTrainType = Drivetrain.TANK;
@@ -31,7 +31,7 @@ public class Configuration {
     public static final int slideConstant = 3200;
     public static final int slideDirection = 1;
     public static final float slideSpeedMultiplier = 1.0F;
-    public static final float slideRetractMultiplier = 0.10F;
+    public static final float slideRetractMultiplier = 0.65F;
     public static final float slidePreciseModeMultiplier = 0.3F;
 
     // camera

@@ -34,6 +34,36 @@ public class DeviceDrive extends Device {
         }
     }
 
+    public void setDrive(float powerFrontLeft, float powerFrontRight, float powerBackLeft, float powerBackRight) {
+        if (drivetrain != Drivetrain.TANK) {
+            frontLeft.setPower(powerFrontLeft);
+            frontRight.setPower(powerFrontRight);
+            backLeft.setPower(powerBackLeft);
+            backRight.setPower(powerBackRight);
+        }
+    }
+
+    public void setDrive(float powerFrontLeft, float powerFrontRight) {
+        if (drivetrain == Drivetrain.TANK) {
+            frontLeft.setPower(-powerFrontLeft);
+            frontRight.setPower(powerFrontRight);
+        }
+    }
+
+    public void runDrive(float powerFrontLeft, float powerFrontRight, float powerBackLeft, float powerBackRight, float seconds) {
+        long current = System.currentTimeMillis();
+        while (current < System.currentTimeMillis() + (long) (seconds * 1000)) {
+            setDrive(powerFrontLeft, powerFrontRight, powerBackLeft, powerBackRight);
+        }
+    }
+
+    public void runDrive(float powerFrontLeft, float powerFrontRight, float seconds) {
+        long current = System.currentTimeMillis();
+        while (System.currentTimeMillis() < current + (long) (seconds * 1000)) {
+            setDrive(powerFrontLeft, powerFrontRight);
+        }
+    }
+
     public void updatePreciseMode(boolean preciseMode) {
         if (preciseMode) {
             speedMultiplier = Configuration.drivePreciseModeMultiplier;
