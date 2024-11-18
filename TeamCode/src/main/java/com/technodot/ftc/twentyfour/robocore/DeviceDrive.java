@@ -52,7 +52,7 @@ public class DeviceDrive extends Device {
 
     public void runDrive(float powerFrontLeft, float powerFrontRight, float powerBackLeft, float powerBackRight, float seconds) {
         long current = System.currentTimeMillis();
-        while (current < System.currentTimeMillis() + (long) (seconds * 1000)) {
+        while (System.currentTimeMillis() < current + (long) (seconds * 1000)) {
             setDrive(powerFrontLeft, powerFrontRight, powerBackLeft, powerBackRight);
         }
     }
@@ -173,7 +173,7 @@ public class DeviceDrive extends Device {
                 backRight.setPower(powerBackRight);
             }
         } else {
-            // Drivetrain.MECANUM has override controls
+            // Drivetrain.MECANUM has override controls for omnidirectionality
 
             leftY *= Configuration.driveDirection;
             rightX *= Configuration.driveTurnDirection;
