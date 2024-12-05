@@ -15,7 +15,7 @@ public class DeviceClaw extends Device {
     public DeviceClaw(HardwareMap hardwareMap) {
         clawArm = hardwareMap.get(DcMotor.class, "clawArm");
         clawMain = hardwareMap.get(Servo.class, "clawMain");
-        clawArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // clawArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void updatePreciseMode(boolean preciseMode) {
@@ -48,17 +48,17 @@ public class DeviceClaw extends Device {
             clawArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         } else if (armClose) {
             targetPosition = Configuration.armClosePosition;
-            armStatus = -2;
+            armStatus = -1;
             clawArm.setTargetPosition(targetPosition);
             clawArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        clawArm.setPower(Configuration.armSpeed * armStatus * speedMultiplier);
+        clawArm.setPower(armStatus);
     }
 
     public void updateArmForce(boolean armCloseForce) {
         if (armCloseForce) {
-            clawArm.setPower(Configuration.armSpeed * -1.0F * speedMultiplier);
+            clawArm.setPower(-1.0F);
         }
     }
 }
