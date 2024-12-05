@@ -19,6 +19,7 @@ Auto at `TeamCode/src/main/java/com.technodot.ftc.twentyfour/BaboAuto.java`<br>
 - **@sheeparmy** the silly builder/thinker
 - **@somethin_999** the builder/thinker
 - **@safire1k** the builder/thinker
+- **@cyyb0rg** the other programmer/builder (the one that isn't a problem)
 - **@cargarzarwild** the experienced yet missing sophomore
 
 ### Controls
