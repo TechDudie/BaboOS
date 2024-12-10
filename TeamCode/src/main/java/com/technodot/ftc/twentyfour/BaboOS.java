@@ -16,6 +16,24 @@ public class BaboOS extends LinearOpMode {
     DeviceSlide deviceSlide;
     MayTag mayTag;
 
+    // gamepad input
+    float leftX;
+    float leftY;
+    float rightX;
+    float rightY;
+    boolean clawOpenPressed;
+    boolean clawClosePressed;
+    boolean armClosePressed;
+    boolean armOpenPressed;
+    boolean slideExtendPressed;
+    boolean slideRetractPressed;
+    boolean preciseMode;
+    boolean armCloseForcePressed;
+    boolean slideExtendForcePressed;
+    boolean slideRetractForcePressed;
+    boolean cameraVisionPortalStartPressed;
+    boolean cameraVisionPortalStopPressed;
+
     @Override
     public void runOpMode() {
         // initialize devices
@@ -36,22 +54,22 @@ public class BaboOS extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             // read input
-            float leftX = gamepad1.left_stick_x;
-            float leftY = gamepad1.left_stick_y;
-            float rightX = gamepad1.right_stick_x;
-            float rightY = gamepad1.right_stick_y;
-            boolean clawOpenPressed = gamepad1.a;
-            boolean clawClosePressed = gamepad1.b;
-            boolean armClosePressed = gamepad1.x;
-            boolean armOpenPressed = gamepad1.y;
-            boolean slideExtendPressed = gamepad1.left_bumper;
-            boolean slideRetractPressed = gamepad1.right_bumper;
-            boolean preciseMode = gamepad1.left_trigger > 0.5;
-            boolean armCloseForcePressed = gamepad1.right_trigger > 0.5;
-            boolean slideExtendForcePressed = gamepad1.dpad_up;
-            boolean slideRetractForcePressed = gamepad1.dpad_down;
-            boolean cameraVisionPortalStartPressed = gamepad1.dpad_left;
-            boolean cameraVisionPortalStopPressed = gamepad1.dpad_right;
+            leftX = gamepad1.left_stick_x;
+            leftY = gamepad1.left_stick_y;
+            rightX = gamepad1.right_stick_x;
+            rightY = gamepad1.right_stick_y;
+            clawOpenPressed = gamepad1.a;
+            clawClosePressed = gamepad1.b;
+            armClosePressed = gamepad1.x;
+            armOpenPressed = gamepad1.y;
+            slideExtendPressed = gamepad1.left_bumper;
+            slideRetractPressed = gamepad1.right_bumper;
+            preciseMode = gamepad1.left_trigger > 0.5;
+            armCloseForcePressed = gamepad1.right_trigger > 0.5;
+            slideExtendForcePressed = gamepad1.dpad_up;
+            slideRetractForcePressed = gamepad1.dpad_down;
+            cameraVisionPortalStartPressed = gamepad1.dpad_left;
+            cameraVisionPortalStopPressed = gamepad1.dpad_right;
 
             deviceDrive.updatePreciseMode(preciseMode);
             deviceClaw.updatePreciseMode(preciseMode);
