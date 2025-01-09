@@ -24,9 +24,8 @@ public class BaboBotz extends LinearOpMode {
 
         waitForStart();
         if (opModeIsActive()) {
-
             while (opModeIsActive()) {
-                driveLeft.setPower(-(gamepad1.left_stick_y - gamepad1.left_stick_x));
+                driveLeft.setPower((gamepad1.left_stick_y - gamepad1.left_stick_x));
                 driveRight.setPower(-(gamepad1.left_stick_y + gamepad1.left_stick_x));
 
                 if (gamepad1.left_bumper) {

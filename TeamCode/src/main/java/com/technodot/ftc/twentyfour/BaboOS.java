@@ -60,8 +60,8 @@ public class BaboOS extends LinearOpMode {
             rightY = gamepad1.right_stick_y;
             clawOpenPressed = gamepad1.a;
             clawClosePressed = gamepad1.b;
-            armClosePressed = gamepad1.x;
-            armOpenPressed = gamepad1.y;
+            armOpenPressed = gamepad1.x;
+            armClosePressed = gamepad1.y;
             slideExtendPressed = gamepad1.left_bumper;
             slideRetractPressed = gamepad1.right_bumper;
             preciseMode = gamepad1.left_trigger > 0.5;
